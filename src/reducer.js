@@ -23,7 +23,7 @@ const initialStateRobots = {
     error: ""
 }
 
-export const requestRobots = (state=initialStateRobots, action={}) => {
+export const robotsReducer = (state=initialStateRobots, action={}) => {
     switch(action.type) {
         case REQUEST_ROBOTS_PENDING:
             return Object.assign({}, state, {isPending: true});

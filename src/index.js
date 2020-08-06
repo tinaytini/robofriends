@@ -8,9 +8,9 @@ import './index.css';
 import App from './container/App';
 import * as serviceWorker from './serviceWorker';
 import 'tachyons';
-import { searchRobots, requestRobots } from './reducer'
+import { searchRobots, robotsReducer } from './reducer'
 
-const rootReducer = combineReducers({searchRobots, requestRobots})
+const rootReducer = combineReducers({searchRobots, robotsReducer})
 const logger = createLogger();
 const store = createStore(rootReducer, applyMiddleware(thunkMiddleware, logger));
 

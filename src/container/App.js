@@ -41,9 +41,9 @@ class App extends Component {
 const mapStateToProps = state => {
     return {
         searchValue: state.searchRobots.searchField,
-        isPending: state.requestRobots.isPending,
-        robots: state.requestRobots.robots,
-        error: state.requestRobots.error
+        isPending: state.robotsReducer.isPending,
+        robots: state.robotsReducer.robots,
+        error: state.robotsReducer.error
     }
 }
 
