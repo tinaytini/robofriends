@@ -5,28 +5,17 @@ import ErrorBoundary from '../components/ErrorBoundary';
 import Scroll from '../components/Scroll';
 import SearchButton from '../components/SearchButton';
 import './app.css';
-import { setSearchField } from '../action';
+import { setSearchField, requestRobots } from '../action';
 
 class App extends Component {
-    constructor() {
-        super()
-        this.state = {
-            robots: []
-        }
-        
-    }
-    
+       
     componentDidMount() {
-        console.log(this.props.store)
-        fetch('https://jsonplaceholder.typicode.com/users')
-        .then(response => response.json())
-        .then(users => this.setState({robots:users}));   
+       this.props.onRequestRobots()
     }
 
 
     render() {
-        const { robots } = this.state;
-        const { searchValue, handleClick } = this.props;
+        const { searchValue, handleClick, robots, isPending } = this.props;
 
         const searchFilter = robots.filter(robot => {
             if (robot.name !== undefined && searchValue !== undefined)    {
@@ -35,7 +24,7 @@ class App extends Component {
             return false
         })
 
-        return !robots.length ?
+        return isPending ?
             <h1>Loading...</h1> : 
             <div className='tc'>
                 <h1 className='f1'>RoboFriends</h1>
@@ -51,13 +40,17 @@ class App extends Component {
 
 const mapStateToProps = state => {
     return {
-        searchValue: state.searchField
+        searchValue: state.searchRobots.searchField,
+        isPending: state.requestRobots.isPending,
+        robots: state.requestRobots.robots,
+        error: state.requestRobots.error
     }
 }
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        handleClick: (event) => dispatch(setSearchField(event.target.value))
+        handleClick: (event) => dispatch(setSearchField(event.target.value)),
+        onRequestRobots: () => dispatch(requestRobots())
     }
 }
 
